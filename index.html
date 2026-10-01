@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
 <meta charset="UTF-8">
@@ -378,6 +378,20 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.7);font-size:var(--sm
 .fade-up{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease}
 .fade-up.visible{opacity:1;transform:translateY(0)}
 
+
+/* DOWNLOAD CARD & NAV BTN */
+.nav-dl{display:inline-flex;align-items:center;gap:6px;background:var(--blue-main);color:var(--white);padding:10px 24px;border-radius:50px;font-weight:800;text-decoration:none;font-size:15px;transition:var(--transition);letter-spacing:0.05em;box-shadow:var(--shadow-md)}
+.nav-dl:hover{background:var(--blue-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+.download-card{display:flex;align-items:center;gap:16px;background:var(--blue-pale);border-radius:12px;padding:24px 32px;margin-top:40px;border:2px dashed var(--blue-mid)}
+.dl-icon{font-size:36px}
+.dl-text{flex:1;text-align:left}
+.dl-title{font-size:18px;font-weight:900;color:var(--blue-deep);margin-bottom:6px}
+.dl-desc{font-size:15px;color:var(--blue-deep);opacity:0.8;line-height:1.5}
+.dl-button{background:var(--white);color:var(--blue-main);font-weight:800;font-size:16px;padding:12px 28px;border-radius:8px;text-decoration:none;box-shadow:var(--shadow-sm);transition:all .2s;white-space:nowrap}
+.dl-button:hover{background:var(--blue-main);color:var(--white);box-shadow:var(--shadow-md)}
+.rule-link-btn{display:inline-block;padding:14px 36px;background:var(--blue-main);color:var(--white);text-decoration:none;font-weight:800;border-radius:8px;box-shadow:var(--shadow-md);transition:all .2s;font-size:16px}
+.rule-link-btn:hover{background:var(--blue-deep);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:960px){
   .deadline-inner{height:auto;padding:14px 20px;flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px}
@@ -388,6 +402,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.7);font-size:var(--sm
   .footer-top{grid-template-columns:1fr}
   .footer-info-grid{grid-template-columns:1fr}
   .nav-links{display:none}
+  .nav-dl{display:none}
   .nav-hamburger{display:flex}
   .banner-countdown{bottom:12px;right:12px}
   .cd-group{padding:0 8px}
@@ -401,6 +416,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.7);font-size:var(--sm
   .venue-showcase{gap:40px}
   .transport-grid{grid-template-columns:1fr;gap:16px}
   .transport-section{padding:30px 24px}
+  .download-card{flex-direction:column;text-align:center} .dl-text{text-align:center} .dl-button{width:100%}
 }
 @media(max-width:768px){
   .venue-showcase{grid-template-columns:1fr;gap:50px}
@@ -446,6 +462,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.7);font-size:var(--sm
       <li><a href="#venue">活動場地</a></li>
       <li><a href="#accommodation">住宿資訊</a></li>
     </ul>
+    <a href="rules.html" class="nav-dl">&#128229; 資料下載</a>
     <button class="nav-hamburger" id="hamburger" aria-label="選單">
       <span></span><span></span><span></span>
     </button>
@@ -457,12 +474,13 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.7);font-size:var(--sm
   <a href="#competition" onclick="closeMobile()">競賽分組</a>
   <a href="#venue" onclick="closeMobile()">活動場地</a>
   <a href="#accommodation" onclick="closeMobile()">住宿資訊</a>
+  <a href="rules.html" style="color:var(--blue-main)">&#128229; 資料下載</a>
 </div>
 
 <!-- HERO -->
 <section id="hero">
   <div class="banner-wrap">
-    <img src="115001.jpg"
+    <img src="115 大專教職員桌球 網頁橫幅.jpg"
          alt="中華民國大專校院115年度教職員工桌球聯誼賽"
          width="1920" height="640">
 
@@ -638,8 +656,8 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.7);font-size:var(--sm
     <div class="comp-tabs">
       <button class="comp-tab active" onclick="switchTab('individual',this)">&#127941; 個人賽</button>
       <button class="comp-tab" onclick="switchTab('team',this)">&#128101; 團體賽</button>
-      <button class="comp-tab" onclick="switchTab('rules',this)">&#128203; 競賽辦法</button>
       <button class="comp-tab" onclick="switchTab('fee',this)">&#128176; 報名費用</button>
+      <a href="rules.html" class="comp-tab" style="display:inline-flex; align-items:center; text-decoration:none;">&#128203; 完整競賽規程 &rarr;</a>
     </div>
     <div class="comp-panel active" id="panel-individual">
       <div class="comp-grid">
@@ -669,59 +687,7 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.7);font-size:var(--sm
         </ul>
       </div>
     </div>
-    <div class="comp-panel" id="panel-rules">
-      <div class="rule-block open">
-        <div class="rule-header" onclick="toggleRule(this)"><div class="rule-header-icon">&#9881;</div><div class="rule-header-title">比賽規則與用球</div><span class="rule-header-arrow">&#9660;</span></div>
-        <div class="rule-body"><ul>
-          <li><strong>比賽規則：</strong>採用中華民國桌球協會修訂之最新桌球比賽規則。</li>
-          <li><strong>比賽用球：</strong>40＋三星級比賽用球。</li>
-          <li><strong>比賽球桌：</strong>SUNFLEX PIONEER桌球檯或同等級比賽球檯。</li>
-        </ul></div>
-      </div>
-      <div class="rule-block">
-        <div class="rule-header" onclick="toggleRule(this)"><div class="rule-header-icon">&#128290;</div><div class="rule-header-title">比賽制度</div><span class="rule-header-arrow">&#9660;</span></div>
-        <div class="rule-body"><ul>
-          <li>個人賽及團體賽均採<strong>分組循環後單敗淘汰賽制</strong>。</li>
-          <li>預賽5點須全部賽完，各點之勝負皆列入成績考量，決賽先勝3點為勝。</li>
-          <li>各點採<strong>5局3勝制</strong>，每局11分，先勝3局者勝。</li>
-          <li>各組僅報名1隊時，不舉行比賽。各組報名2隊時，採3賽2勝制。</li>
-          <li>各組報名5隊以下（含5隊）採單循環制；6隊以上採分組循環預賽，每組取前2名決賽。</li>
-          <li>承辦單位得逕行進入決賽，但不可直接取得名次。</li>
-        </ul></div>
-      </div>
-      <div class="rule-block">
-        <div class="rule-header" onclick="toggleRule(this)"><div class="rule-header-icon">&#128202;</div><div class="rule-header-title">循環賽計分法</div><span class="rule-header-arrow">&#9660;</span></div>
-        <div class="rule-body"><ul>
-          <li>勝1場得2分，敗1場得1分，積分多者獲勝。</li>
-          <li>中途棄權退出或被判失格之球隊，已賽成績不予計算，往後出賽權亦予取消。</li>
-          <li>積分相等時優先順序：2隊相同時以比賽勝隊獲勝；3隊以上積分相等時，依序以勝點/負點 → 勝局/負局 → 勝分/負分之商大者獲勝；若再相同，由裁判長抽籤決定。</li>
-        </ul></div>
-      </div>
-      <div class="rule-block">
-        <div class="rule-header" onclick="toggleRule(this)"><div class="rule-header-icon">&#128093;</div><div class="rule-header-title">出賽規定</div><span class="rule-header-arrow">&#9660;</span></div>
-        <div class="rule-body"><ul>
-          <li>各隊應於賽前30分鐘向大會領取出賽名單，賽前15分鐘提交競賽組。</li>
-          <li>超過比賽時間10分鐘未能出場者以棄權論（以大會時間為準）。</li>
-          <li><strong>服裝：</strong>上衣、短褲及短裙之主體顏色應明顯與所使用球的顏色不同（領子袖子除外）。</li>
-          <li>球員須攜帶<strong>服務證明正本</strong>，當場未能提出者不得參加比賽。</li>
-        </ul></div>
-      </div>
-      <div class="rule-block">
-        <div class="rule-header" onclick="toggleRule(this)"><div class="rule-header-icon">&#127941;</div><div class="rule-header-title">獎勵辦法</div><span class="rule-header-arrow">&#9660;</span></div>
-        <div class="rule-body"><ul>
-          <li>個人賽頒發<strong>獎牌乙面</strong>，團體賽頒發<strong>獎盃乙座</strong>。</li>
-          <li>錄取優勝名額依隊數：2∼3隊取1名；4隊取2名；5隊取3名；6隊取4名；7隊取5名；8隊取6名；9隊取7名；10隊以上取8名。</li>
-        </ul></div>
-      </div>
-      <div class="rule-block">
-        <div class="rule-header" onclick="toggleRule(this)"><div class="rule-header-icon">&#128226;</div><div class="rule-header-title">申訴辦法</div><span class="rule-header-arrow">&#9660;</span></div>
-        <div class="rule-body"><ul>
-          <li>運動員資格之申訴應於比賽開始前提出；其他申訴應在比賽結束後<strong>一小時內</strong>提出。</li>
-          <li>申訴書由領隊或教練簽名蓋章，並繳交保證金<strong>新臺幣伍仟元整</strong>。申訴成立時退還，否則沒收。</li>
-          <li>申訴以大會審判委員會之判決為最終決議。</li>
-        </ul></div>
-      </div>
-    </div>
+    
     <div class="comp-panel" id="panel-fee">
       <div class="fee-layout">
         <div class="fee-header">
@@ -755,6 +721,16 @@ footer{background:var(--blue-deep);color:rgba(255,255,255,.7);font-size:var(--sm
             <div class="fee-address-name">義守大學體育室　蔡長曜　收</div>
           </div>
         </div>
+        <!-- DOWNLOAD CARD -->
+        <div class="download-card">
+           <div class="dl-icon">&#128196;</div>
+           <div class="dl-text">
+             <div class="dl-title">大會專用報名表下載</div>
+             <div class="dl-desc">請下載此檔案填寫名單，並連同匯票掛號寄至大會。</div>
+           </div>
+           <a href="r001.docx" class="dl-button" download>點此下載檔案</a>
+        </div>
+
       </div>
     </div>
   </div>
