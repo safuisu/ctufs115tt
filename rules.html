@@ -438,21 +438,27 @@ body{
 </div>
 
 <script>
-// TOC Highlight script
 document.addEventListener('DOMContentLoaded', () => {
   const sections = document.querySelectorAll('.section-block');
   const navLinks = document.querySelectorAll('.toc-link');
   
+  let visibleIds = [];
   const observer = new IntersectionObserver((entries) => {
-    let currentId = '';
     entries.forEach(entry => {
-      // 只要有碰到視窗上方或正在畫面中，就標記它
+      const id = entry.target.id;
       if (entry.isIntersecting) {
-        currentId = entry.target.getAttribute('id');
+        if (!visibleIds.includes(id)) visibleIds.push(id);
+      } else {
+        visibleIds = visibleIds.filter(v => v !== id);
       }
     });
     
-    if (currentId) {
+    // 依照網頁原本的章節順序排序，確保永遠只抓「出現在畫面最上方」的那個章節
+    const domOrder = Array.from(sections).map(s => s.id);
+    visibleIds.sort((a, b) => domOrder.indexOf(a) - domOrder.indexOf(b));
+    
+    if (visibleIds.length > 0) {
+      const currentId = visibleIds[0];
       navLinks.forEach(link => {
         link.classList.remove('active');
         if (link.getAttribute('href') === '#' + currentId) {
@@ -461,7 +467,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
   }, {
-    rootMargin: '-15% 0px -60% 0px',
+    // 調整偵測區塊，避開上方的選單列高度
+    rootMargin: '-100px 0px -30% 0px',
     threshold: 0
   });
 
